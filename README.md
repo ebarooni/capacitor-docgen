@@ -13,6 +13,11 @@ Docs Readme Markdown and JSON Generator for [Capacitor](https://capacitorjs.com/
 npm i @capacitor/docgen --save-dev
 ```
 
+## Changes
+
+The upstream repository (v0.3.0`) does not support TypeScript interfaces that extend or implement other interfaces correctly. 
+This fork addresses that limitation by ensuring that inherited properties and methods are included in the generated documentation.
+
 ## Example Readme File
 
 ```
@@ -82,3 +87,8 @@ The same API that's available to the CLI can also be imported from `@capacitor/d
 
 - [Capacitor](https://capacitorjs.com/)
 - [Capacitor Community Plugins](https://github.com/capacitor-community)
+
+## Remarks
+
+This repository is a fork of [@capacitor/docgen](https://github.com/ionic-team/capacitor-docgen). It will be maintained only until the upstream repository supports 
+extended and implemented interfaces.
