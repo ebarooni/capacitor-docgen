@@ -1,6 +1,6 @@
-import type { DocsGenerateOptions, DocsGenerateResults } from './types';
-import { parse } from './parse';
-import { outputJson, outputReadme } from './output';
+import type { DocsGenerateOptions, DocsGenerateResults } from "./types";
+import { parse } from "./parse";
+import { outputJson, outputReadme } from "./output";
 
 /**
  * Given a tsconfig file path, or input files, will return generated

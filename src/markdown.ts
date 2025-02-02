@@ -36,7 +36,11 @@ export class MarkdownTable {
         const row = this.rows[r];
         if (row && !row.isHeader) {
           const column = row.columns[c];
-          if (column && typeof column.text === 'string' && column.text.trim().length > 0) {
+          if (
+            column &&
+            typeof column.text === "string" &&
+            column.text.trim().length > 0
+          ) {
             isEmptyColumn = false;
             break;
           }
@@ -59,11 +63,11 @@ export class MarkdownTable {
 }
 
 const escapeMarkdownTableColumn = (text: string) => {
-  text = text.replace(/\r?\n/g, ' ');
-  while (text.includes('  ')) {
-    text = text.replace(/  /g, ' ');
+  text = text.replace(/\r?\n/g, " ");
+  while (text.includes("  ")) {
+    text = text.replace(/  /g, " ");
   }
-  text = text.replace(/\|/g, '\\|');
+  text = text.replace(/\|/g, "\\|");
   return text;
 };
 
@@ -99,11 +103,11 @@ const createBorder = (th: RowData) => {
 
   th.columns.forEach((c) => {
     const borderCol: ColumnData = {
-      text: '',
+      text: "",
       width: c.width,
     };
     while (borderCol.text.length < borderCol.width) {
-      borderCol.text += '-';
+      borderCol.text += "-";
     }
     border.columns.push(borderCol);
   });
@@ -112,14 +116,14 @@ const createBorder = (th: RowData) => {
 };
 
 const createRow = (row: RowData) => {
-  const content: string[] = ['| '];
+  const content: string[] = ["| "];
 
   row.columns.forEach((c) => {
     content.push(c.text);
-    content.push(' | ');
+    content.push(" | ");
   });
 
-  return content.join('').trim();
+  return content.join("").trim();
 };
 
 const normalizeColumCount = (rows: RowData[]) => {
@@ -158,7 +162,7 @@ const normalizeColumnWidth = (rows: RowData[]) => {
       const col = r.columns[columnIndex];
       col.width = longestText;
       while (col.text.length < longestText) {
-        col.text += ' ';
+        col.text += " ";
       }
     });
   }

@@ -1,14 +1,15 @@
-import { parse } from '../parse';
-import path from 'path';
+import { parse } from "../parse";
+import path from "path";
 
-describe('parse', () => {
+describe("parse", () => {
   const apiFinder = parse({
-    tsconfigPath: path.join(__dirname, 'fixtures', 'tsconfig.json'),
+    tsconfigPath: path.join(__dirname, "fixtures", "tsconfig.json"),
   });
 
-  const { api, interfaces, enums, typeAliases, pluginConfigs } = apiFinder('HapticsPlugin');
+  const { api, interfaces, enums, typeAliases, pluginConfigs } =
+    apiFinder("HapticsPlugin");
 
-  it('api', () => {
+  it("api", () => {
     expect(api.name).toBe(`HapticsPlugin`);
     expect(api.slug).toBe(`hapticsplugin`);
     expect(api.docs).toContain(`Docs from JSDoc comments!`);
@@ -43,27 +44,31 @@ describe('parse', () => {
     expect(eNames).not.toContain(`VibrateListenerEvent`);
   });
 
-  it('api enums', () => {
+  it("api enums", () => {
     expect(enums).toHaveLength(2);
     expect(enums[0].name).toBe(`HapticsImpactStyle`);
     expect(enums[0].slug).toBe(`hapticsimpactstyle`);
     expect(enums[0].members).toHaveLength(3);
     expect(enums[0].members[0].name).toBe(`Heavy`);
     expect(enums[0].members[0].value).toBe(`'HEAVY'`);
-    expect(enums[0].members[0].docs).toBe(`A collision between small, light user interface elements`);
+    expect(enums[0].members[0].docs).toBe(
+      `A collision between small, light user interface elements`,
+    );
     expect(enums[0].members[0].tags).toHaveLength(1);
     expect(enums[0].members[0].tags[0].name).toBe(`since`);
     expect(enums[0].members[0].tags[0].text).toBe(`1.0.0`);
   });
 
-  it('api methods', () => {
+  it("api methods", () => {
     expect(api.methods).toHaveLength(5);
 
     const m0 = api.methods[0];
     expect(m0.name).toBe(`impact`);
     expect(m0.docs).toBe(`Trigger a haptics "impact" feedback`);
     expect(m0.slug).toBe(`impact`);
-    expect(m0.signature).toBe(`(options: HapticsImpactOptions, x?: number | undefined) => Promise<HapticsImpact>`);
+    expect(m0.signature).toBe(
+      `(options: HapticsImpactOptions, x?: number | undefined) => Promise<HapticsImpact>`,
+    );
     expect(m0.returns).toBe(`Promise<HapticsImpact>`);
     expect(m0.parameters).toHaveLength(2);
     expect(m0.parameters[0].name).toBe(`options`);
@@ -86,22 +91,26 @@ describe('parse', () => {
     expect(m3.name).toBe(`addListener`);
     expect(m3.slug).toBe(`addlistenervibrate-`);
     expect(m3.docs).toBe(`Add a listener. Callback has VibrateOptions.`);
-    expect(m3.signature).toBe(`(eventName: 'vibrate', listenerFunc: VibrateListener) => Promise<void>`);
+    expect(m3.signature).toBe(
+      `(eventName: 'vibrate', listenerFunc: VibrateListener) => Promise<void>`,
+    );
     expect(m3.complexTypes).toContain(`VibrateListener`);
     expect(m3.parameters).toHaveLength(2);
-    expect(m3.parameters[1].name).toBe('listenerFunc');
-    expect(m3.parameters[1].type).toBe('VibrateListener');
+    expect(m3.parameters[1].name).toBe("listenerFunc");
+    expect(m3.parameters[1].type).toBe("VibrateListener");
     expect(m3.returns).toBe(`Promise<void>`);
 
     const m4 = api.methods[4];
     expect(m4.name).toBe(`removeAllListeners`);
-    expect(m4.docs).toBe(`Remove all the listeners that are attached to this plugin`);
+    expect(m4.docs).toBe(
+      `Remove all the listeners that are attached to this plugin`,
+    );
     expect(m4.signature).toBe(`() => void`);
     expect(m4.returns).toBe(`void`);
   });
 
-  it('interface properties', () => {
-    const i = interfaces.find((i) => i.name === 'HapticsImpactOptions');
+  it("interface properties", () => {
+    const i = interfaces.find((i) => i.name === "HapticsImpactOptions");
     expect(i.slug).toBe(`hapticsimpactoptions`);
     expect(i.methods).toHaveLength(0);
     expect(i.properties).toHaveLength(3);
@@ -115,24 +124,24 @@ describe('parse', () => {
     expect(p0.complexTypes[0]).toBe(`HapticsImpactStyle`);
     expect(p0.type).toBe(`HapticsImpactStyle`);
 
-    const i1 = interfaces.find((i) => i.name === 'VibrateListenerEvent');
-    expect(i1.name).toBe('VibrateListenerEvent');
+    const i1 = interfaces.find((i) => i.name === "VibrateListenerEvent");
+    expect(i1.name).toBe("VibrateListenerEvent");
     expect(i1.properties).toHaveLength(3);
-    expect(i1.properties[2].type).toBe('RepeatSchedule');
+    expect(i1.properties[2].type).toBe("RepeatSchedule");
   });
 
-  it('type typeAliases', () => {
-    const t0 = typeAliases.find((i) => i.name === 'VibrateListener');
+  it("type typeAliases", () => {
+    const t0 = typeAliases.find((i) => i.name === "VibrateListener");
     expect(t0.slug).toBe(`vibratelistener`);
     expect(t0.docs).toBe(`The vibrate listener callback function.`);
     expect(t0.types).toHaveLength(1);
 
-    const t1 = typeAliases.find((i) => i.name === 'RepeatSchedule');
+    const t1 = typeAliases.find((i) => i.name === "RepeatSchedule");
     expect(t1.slug).toBe(`repeatschedule`);
     expect(t1.types).toHaveLength(4);
   });
 
-  it('Plugins Config', () => {
+  it("Plugins Config", () => {
     expect(pluginConfigs).toHaveLength(1);
     const p = pluginConfigs.find((i) => i.name === `Haptics`);
 
