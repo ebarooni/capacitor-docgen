@@ -1,20 +1,10 @@
-// @ts-check
-
 import config from "@ebarooni/eslint-config";
-import tseslint from "typescript-eslint";
 
-export default tseslint.config(
+export default [
   ...config.javascript,
-  ...config.typescript,
+  config.markdown,
   config.json,
   {
-    languageOptions: {
-      parserOptions: {
-        project: ["tsconfig.json"],
-      },
-    },
+    ignores: ["**/dist"],
   },
-  {
-    ignores: ["dist", "src/test/**"],
-  },
-);
+];
