@@ -15,7 +15,7 @@ npm i @capacitor/docgen --save-dev
 
 ## Changes
 
-The upstream repository (v0.3.0`) does not support TypeScript interfaces that extend or implement other interfaces correctly.
+The upstream [repository](https://github.com/ionic-team/capacitor-docgen) does not support TypeScript interfaces that extend or implement other interfaces correctly.
 This fork addresses that limitation by ensuring that inherited properties and methods are included in the generated documentation.
 
 ## Example Readme File
