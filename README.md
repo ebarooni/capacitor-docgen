@@ -1,5 +1,9 @@
 # @capacitor/docgen
 
+> [!IMPORTANT]  
+> This repository is a fork of [@capacitor/docgen](https://github.com/ionic-team/capacitor-docgen). It will be maintained only until the upstream repository supports
+> extended and implemented interfaces.
+
 Docs Readme Markdown and JSON Generator for [Capacitor](https://capacitorjs.com/) Plugins.
 
 - Designed specifically for generating docs for Capacitor plugins using TypeScript
@@ -85,7 +89,6 @@ The same API that's available to the CLI can also be imported from `@capacitor/d
 - [Capacitor](https://capacitorjs.com/)
 - [Capacitor Community Plugins](https://github.com/capacitor-community)
 
-## Remarks
+## License
 
-This repository is a fork of [@capacitor/docgen](https://github.com/ionic-team/capacitor-docgen). It will be maintained only until the upstream repository supports
-extended and implemented interfaces.
+See original [LICENSE](LICENSE).
