@@ -35,7 +35,8 @@
   },
   "license": "MIT",
   "files": [
-    "dist/"
+    "dist/",
+    "LICENSE"
   ],
   "dependencies": {
     "@types/node": "^14.18.0",
