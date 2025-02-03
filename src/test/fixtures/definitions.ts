@@ -1,6 +1,6 @@
 /// <reference types="@capacitor/cli" />
 
-declare module '@capacitor/cli' {
+declare module "@capacitor/cli" {
   export interface PluginsConfig {
     /**
      * Haptics can be configured with this options:
@@ -13,7 +13,7 @@ declare module '@capacitor/cli' {
        * @default native
        * @example "native"
        */
-      style?: 'none' | 'native';
+      style?: "none" | "native";
 
       /**
        * Configure the duration.
@@ -65,7 +65,10 @@ export interface HapticsPlugin {
    *
    * @since 1.0.0
    */
-  addListener(eventName: 'vibrate', listenerFunc: VibrateListener): Promise<void>;
+  addListener(
+    eventName: "vibrate",
+    listenerFunc: VibrateListener,
+  ): Promise<void>;
 
   /**
    * Add a listener. Callback has VibrateOptions.
@@ -73,7 +76,7 @@ export interface HapticsPlugin {
    * @hidden
    * @deprecated Use the 'vibrate' event instead.
    */
-  addListener(eventName: 'bad', listenerFunc: VibrateListener): Promise<void>;
+  addListener(eventName: "bad", listenerFunc: VibrateListener): Promise<void>;
 
   /**
    * Remove all the listeners that are attached to this plugin
@@ -113,7 +116,7 @@ export interface VibrateListenerEvent {
  * How often a vibration repeats.
  * @since 1.0.0
  */
-export type RepeatSchedule = 'hourly' | 'daily' | 'weekly' | 'monthly';
+export type RepeatSchedule = "hourly" | "daily" | "weekly" | "monthly";
 
 export interface HapticsImpact {
   value: number;
@@ -146,21 +149,21 @@ export enum HapticsImpactStyle {
    *
    * @since 1.0.0
    */
-  Heavy = 'HEAVY',
+  Heavy = "HEAVY",
 
   /**
    * A collision between moderately sized user interface elements
    *
    * @since 1.0.0
    */
-  Medium = 'MEDIUM',
+  Medium = "MEDIUM",
 
   /**
    * A collision between small, light user interface elements
    *
    * @since 1.0.0
    */
-  Light = 'LIGHT',
+  Light = "LIGHT",
 }
 
 export interface HapticsNotificationOptions {
@@ -181,21 +184,21 @@ export enum HapticsNotificationType {
    *
    * @since 1.0.0
    */
-  SUCCESS = 'SUCCESS',
+  SUCCESS = "SUCCESS",
 
   /**
    * A notification feedback type indicating that a task has produced a warning
    *
    * @since 1.0.0
    */
-  WARNING = 'WARNING',
+  WARNING = "WARNING",
 
   /**
    * A notification feedback type indicating that a task has failed
    *
    * @since 1.0.0
    */
-  ERROR = 'ERROR',
+  ERROR = "ERROR",
 }
 
 export interface VibrateOptions {
