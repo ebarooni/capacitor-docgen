@@ -1,8 +1,9 @@
 # @capacitor/docgen
 
 > [!IMPORTANT]  
-> This repository is a fork of [@capacitor/docgen](https://github.com/ionic-team/capacitor-docgen). It will be maintained only until the upstream repository supports
-> extended and implemented interfaces.
+> 💡 This is a fork of [@capacitor/docgen](https://github.com/ionic-team/capacitor-docgen). 
+> It will be maintained only until the upstream repository supports interface extensions and type intersections. 
+> See [changes](#changes) for details.
 
 Docs Readme Markdown and JSON Generator for [Capacitor](https://capacitorjs.com/) Plugins.
 
@@ -19,7 +20,7 @@ npm i @capacitor/docgen --save-dev
 
 ## Changes
 
-The upstream [repository](https://github.com/ionic-team/capacitor-docgen) does not support TypeScript interfaces that extend or implement other interfaces correctly.
+[@capacitor/docgen](https://github.com/ionic-team/capacitor-docgen) does not support type intersections or interface extensions. 
 This fork addresses that limitation by ensuring that inherited properties and methods are included in the generated documentation.
 
 ## Example Readme File
