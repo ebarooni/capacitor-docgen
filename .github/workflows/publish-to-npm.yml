@@ -32,21 +32,3 @@ jobs:
         run: npm run release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_GITHUB_CICD }}
-
-      - name: Get package version
-        id: pkg
-        run: |
-          VERSION=$(jq -r '.version' package.json)
-          echo "Package version is $VERSION"
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Set git config
-        run: |
-          git config user.name ${{ secrets.MANUAL_CI_TRIGGER_NAME }}
-          git config user.email ${{ secrets.MANUAL_CI_TRIGGER_EMAIL }}
-
-      - name: Create tag
-        run: git tag -a v${{ steps.pkg.outputs.version }} -m "Release version ${{ steps.pkg.outputs.version }}"
-
-      - name: Push tag
-        run: git push origin v${{ steps.pkg.outputs.version }}
