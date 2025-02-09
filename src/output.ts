@@ -212,6 +212,12 @@ function methodsTable(data: DocsData, m: DocsInterfaceMethod) {
     o.push(``);
   }
 
+  const platform = getTagText(m.tags, "platform");
+  if (platform) {
+    o.push(`**Platform:** ${platform}`);
+    o.push(``);
+  }
+
   o.push(`--------------------`);
   o.push(``);
   o.push(``);
@@ -307,7 +313,14 @@ function interfaceTable(data: DocsData, i: DocsInterface) {
   if (i.properties.length > 0) {
     const t = new MarkdownTable();
 
-    t.addHeader([`Prop`, `Type`, `Description`, `Default`, `Since`]);
+    t.addHeader([
+      `Prop`,
+      `Type`,
+      `Description`,
+      `Default`,
+      `Since`,
+      `Platform`,
+    ]);
 
     i.properties.forEach((m) => {
       const defaultValue = getTagText(m.tags, "default");
@@ -318,6 +331,7 @@ function interfaceTable(data: DocsData, i: DocsInterface) {
         formatDescription(data, m.docs),
         defaultValue ? `<code>${defaultValue}</code>` : "",
         getTagText(m.tags, "since"),
+        getTagText(m.tags, "platform"),
       ]);
     });
 
@@ -358,7 +372,14 @@ function configInterfaceTable(data: DocsData, i: DocsConfigInterface) {
   if (i.properties.length > 0) {
     const t = new MarkdownTable();
 
-    t.addHeader([`Prop`, `Type`, `Description`, `Default`, `Since`]);
+    t.addHeader([
+      `Prop`,
+      `Type`,
+      `Description`,
+      `Default`,
+      `Since`,
+      `Platform`,
+    ]);
 
     i.properties.forEach((m) => {
       const defaultValue = getTagText(m.tags, "default");
@@ -369,6 +390,7 @@ function configInterfaceTable(data: DocsData, i: DocsConfigInterface) {
         formatDescription(data, m.docs),
         defaultValue ? `<code>${defaultValue}</code>` : "",
         getTagText(m.tags, "since"),
+        getTagText(m.tags, "platform"),
       ]);
     });
 
@@ -411,7 +433,7 @@ function enumTable(data: DocsData, i: DocsEnum) {
   if (i.members.length > 0) {
     const t = new MarkdownTable();
 
-    t.addHeader([`Members`, `Value`, `Description`, `Since`]);
+    t.addHeader([`Members`, `Value`, `Description`, `Since`, `Platform`]);
 
     i.members.forEach((m) => {
       t.addRow([
@@ -419,6 +441,7 @@ function enumTable(data: DocsData, i: DocsEnum) {
         formatType(data, m.value).formatted,
         formatDescription(data, m.docs),
         getTagText(m.tags, "since"),
+        getTagText(m.tags, "platform"),
       ]);
     });
 
