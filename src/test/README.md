@@ -163,7 +163,9 @@ Remove all the listeners that are attached to this plugin
 
 The vibrate listener callback function.
 
-<code>(event: <a href="#vibratelistenerevent">VibrateListenerEvent</a>): void</code>
+<code>
+  (event: <a href="#vibratelistenerevent">VibrateListenerEvent</a>): void
+</code>
 
 #### RepeatSchedule
 
@@ -223,12 +225,12 @@ In `capacitor.config.ts`:
 ```ts
 /// <reference types="@capacitor/haptics" />
 
-import { CapacitorConfig } from "@capacitor/cli";
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   plugins: {
     Haptics: {
-      style: "native",
+      style: 'native',
       duration: 123,
     },
   },
