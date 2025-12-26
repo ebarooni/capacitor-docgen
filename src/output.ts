@@ -1,13 +1,9 @@
-import fs from "fs";
-import path from "path";
-import {
-  formatDescription,
-  formatType,
-  formatMethodSignature,
-} from "./formatting";
-import { promisify } from "util";
-import { MarkdownTable } from "./markdown";
-import { slugify } from "./parse";
+import fs from 'fs';
+import path from 'path';
+import { formatDescription, formatType, formatMethodSignature } from './formatting';
+import { promisify } from 'util';
+import { MarkdownTable } from './markdown';
+import { slugify } from './parse';
 import type {
   DocsConfigInterface,
   DocsData,
@@ -17,14 +13,14 @@ import type {
   DocsMethodParam,
   DocsTagInfo,
   DocsTypeAlias,
-} from "./types";
+} from './types';
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const mkdir = promisify(fs.mkdir);
 
 export async function outputReadme(readmeFilePath: string, data: DocsData) {
-  if (typeof readmeFilePath !== "string") {
+  if (typeof readmeFilePath !== 'string') {
     throw new Error(`Missing readme file path`);
   }
   if (!path.isAbsolute(readmeFilePath)) {
@@ -32,7 +28,7 @@ export async function outputReadme(readmeFilePath: string, data: DocsData) {
   }
   let content: string;
   try {
-    content = await readFile(readmeFilePath, "utf8");
+    content = await readFile(readmeFilePath, 'utf8');
   } catch (e) {
     throw new Error(
       `Unable to read: "${readmeFilePath}".\n\nIf this is the correct path, please create the file first, then run again.`,
@@ -44,7 +40,7 @@ export async function outputReadme(readmeFilePath: string, data: DocsData) {
 }
 
 export function replaceMarkdownPlaceholders(content: string, data: DocsData) {
-  if (typeof content !== "string") {
+  if (typeof content !== 'string') {
     throw new Error(`Invalid content`);
   }
   if (data == null || data.api == null) {
@@ -71,8 +67,7 @@ function replaceMarkdownDocsIndex(content: string, data: DocsData) {
     const endInnerIndex = content.indexOf(INDEX_END);
     if (endInnerIndex > -1) {
       const inner = content.substring(startOuterIndex + INDEX_START.length);
-      const startInnderIndex =
-        startOuterIndex + INDEX_START.length + inner.indexOf(">") + 1;
+      const startInnderIndex = startOuterIndex + INDEX_START.length + inner.indexOf('>') + 1;
       const start = content.substring(0, startInnderIndex);
       const end = content.substring(endInnerIndex);
       return `${start}\n\n${markdownIndex(data)}\n\n${end}`;
@@ -88,8 +83,7 @@ function replaceMarkdownDocsConfig(content: string, data: DocsData) {
     const endInnerIndex = content.indexOf(CONFIG_END);
     if (endInnerIndex > -1) {
       const inner = content.substring(startOuterIndex + CONFIG_START.length);
-      const startInnerIndex =
-        startOuterIndex + CONFIG_START.length + inner.indexOf(">") + 1;
+      const startInnerIndex = startOuterIndex + CONFIG_START.length + inner.indexOf('>') + 1;
       const start = content.substring(0, startInnerIndex);
       const end = content.substring(endInnerIndex);
       return `${start}\n${UPDATE_MSG}\n\n${markdownConfig(data)}\n\n${end}`;
@@ -105,8 +99,7 @@ function replaceMarkdownDocsApi(content: string, data: DocsData) {
     const endInnerIndex = content.indexOf(API_END);
     if (endInnerIndex > -1) {
       const inner = content.substring(startOuterIndex + API_START.length);
-      const startInnerIndex =
-        startOuterIndex + API_START.length + inner.indexOf(">") + 1;
+      const startInnerIndex = startOuterIndex + API_START.length + inner.indexOf('>') + 1;
       const start = content.substring(0, startInnerIndex);
       const end = content.substring(endInnerIndex);
       return `${start}\n${UPDATE_MSG}\n\n${markdownApi(data)}\n\n${end}`;
@@ -124,24 +117,24 @@ function markdownIndex(data: DocsData) {
   });
 
   if (data.interfaces.length > 0) {
-    o.push(`* [Interfaces](#${slugify("Interfaces")})`);
+    o.push(`* [Interfaces](#${slugify('Interfaces')})`);
   }
 
   if (data.typeAliases.length > 0) {
-    o.push(`* [Type Aliases](#${slugify("Type Aliases")})`);
+    o.push(`* [Type Aliases](#${slugify('Type Aliases')})`);
   }
 
   if (data.enums.length > 0) {
-    o.push(`* [Enums](#${slugify("Enums")})`);
+    o.push(`* [Enums](#${slugify('Enums')})`);
   }
 
-  return o.join("\n").trim();
+  return o.join('\n').trim();
 }
 
 function markdownApi(data: DocsData) {
   const o: string[] = [];
 
-  if (typeof data.api?.docs === "string" && data.api.docs.length > 0) {
+  if (typeof data.api?.docs === 'string' && data.api.docs.length > 0) {
     o.push(data.api.docs);
     o.push(``);
   }
@@ -177,7 +170,7 @@ function markdownApi(data: DocsData) {
     o.push(``);
   }
 
-  return o.join("\n").trim();
+  return o.join('\n').trim();
 }
 
 function methodsTable(data: DocsData, m: DocsInterfaceMethod) {
@@ -185,9 +178,9 @@ function methodsTable(data: DocsData, m: DocsInterfaceMethod) {
 
   o.push(`### ${formatMethodSignature(m)}`);
   o.push(``);
-  o.push("```typescript");
+  o.push('```typescript');
   o.push(`${m.name}${m.signature}`);
-  o.push("```");
+  o.push('```');
   o.push(``);
 
   if (m.docs) {
@@ -201,18 +194,18 @@ function methodsTable(data: DocsData, m: DocsInterfaceMethod) {
   }
 
   const ret = formatType(data, m.returns);
-  if (ret.type !== "void" && ret.type !== "Promise<void>") {
+  if (ret.type !== 'void' && ret.type !== 'Promise<void>') {
     o.push(`**Returns:** ${ret.formatted}`);
     o.push(``);
   }
 
-  const since = getTagText(m.tags, "since");
+  const since = getTagText(m.tags, 'since');
   if (since) {
     o.push(`**Since:** ${since}`);
     o.push(``);
   }
 
-  const platform = getTagText(m.tags, "platform");
+  const platform = getTagText(m.tags, 'platform');
   if (platform) {
     o.push(`**Platform:** ${platform}`);
     o.push(``);
@@ -222,7 +215,7 @@ function methodsTable(data: DocsData, m: DocsInterfaceMethod) {
   o.push(``);
   o.push(``);
 
-  return o.join("\n");
+  return o.join('\n');
 }
 
 function markdownConfig(data: DocsData) {
@@ -234,7 +227,7 @@ function markdownConfig(data: DocsData) {
     });
   }
 
-  return o.join("\n");
+  return o.join('\n');
 }
 
 function buildExamples(c: DocsConfigInterface) {
@@ -249,7 +242,7 @@ function buildExamples(c: DocsConfigInterface) {
   o.push(`    "${c.name}": {`);
   c.properties.forEach((p, i) => {
     o.push(
-      `      "${p.name}": ${p.tags.find((t) => t.name === "example")?.text}${i === c.properties.length - 1 ? "" : ","}`,
+      `      "${p.name}": ${p.tags.find((t) => t.name === 'example')?.text}${i === c.properties.length - 1 ? '' : ','}`,
     );
   });
   o.push(`    }`);
@@ -269,9 +262,7 @@ function buildExamples(c: DocsConfigInterface) {
   o.push(`  plugins: {`);
   o.push(`    ${c.name}: {`);
   c.properties.forEach((p) => {
-    o.push(
-      `      ${p.name}: ${p.tags.find((t) => t.name === "example")?.text},`,
-    );
+    o.push(`      ${p.name}: ${p.tags.find((t) => t.name === 'example')?.text},`);
   });
   o.push(`    },`);
   o.push(`  },`);
@@ -280,7 +271,7 @@ function buildExamples(c: DocsConfigInterface) {
   o.push(`export default config;`);
   o.push(`\`\`\``);
 
-  return o.join("\n");
+  return o.join('\n');
 }
 
 function createMethodParamTable(data: DocsData, parameters: DocsMethodParam[]) {
@@ -313,25 +304,18 @@ function interfaceTable(data: DocsData, i: DocsInterface) {
   if (i.properties.length > 0) {
     const t = new MarkdownTable();
 
-    t.addHeader([
-      `Prop`,
-      `Type`,
-      `Description`,
-      `Default`,
-      `Since`,
-      `Platform`,
-    ]);
+    t.addHeader([`Prop`, `Type`, `Description`, `Default`, `Since`, `Platform`]);
 
     i.properties.forEach((m) => {
-      const defaultValue = getTagText(m.tags, "default");
+      const defaultValue = getTagText(m.tags, 'default');
 
       t.addRow([
         `**\`${m.name}\`**`,
         formatType(data, m.type).formatted,
         formatDescription(data, m.docs),
-        defaultValue ? `<code>${defaultValue}</code>` : "",
-        getTagText(m.tags, "since"),
-        getTagText(m.tags, "platform"),
+        defaultValue ? `<code>${defaultValue}</code>` : '',
+        getTagText(m.tags, 'since'),
+        getTagText(m.tags, 'platform'),
       ]);
     });
 
@@ -346,11 +330,7 @@ function interfaceTable(data: DocsData, i: DocsInterface) {
     t.addHeader([`Method`, `Signature`, `Description`]);
 
     i.methods.forEach((m) => {
-      t.addRow([
-        `**${m.name}**`,
-        formatDescription(data, m.signature),
-        formatDescription(data, m.docs),
-      ]);
+      t.addRow([`**${m.name}**`, formatDescription(data, m.signature), formatDescription(data, m.docs)]);
     });
 
     t.removeEmptyColumns();
@@ -372,25 +352,18 @@ function configInterfaceTable(data: DocsData, i: DocsConfigInterface) {
   if (i.properties.length > 0) {
     const t = new MarkdownTable();
 
-    t.addHeader([
-      `Prop`,
-      `Type`,
-      `Description`,
-      `Default`,
-      `Since`,
-      `Platform`,
-    ]);
+    t.addHeader([`Prop`, `Type`, `Description`, `Default`, `Since`, `Platform`]);
 
     i.properties.forEach((m) => {
-      const defaultValue = getTagText(m.tags, "default");
+      const defaultValue = getTagText(m.tags, 'default');
 
       t.addRow([
         `**\`${m.name}\`**`,
         formatType(data, m.type).formatted,
         formatDescription(data, m.docs),
-        defaultValue ? `<code>${defaultValue}</code>` : "",
-        getTagText(m.tags, "since"),
-        getTagText(m.tags, "platform"),
+        defaultValue ? `<code>${defaultValue}</code>` : '',
+        getTagText(m.tags, 'since'),
+        getTagText(m.tags, 'platform'),
       ]);
     });
 
@@ -415,7 +388,7 @@ function typeAliasTable(data: DocsData, t: DocsTypeAlias) {
 
   const type = t.types
     .map((ty) => formatType(data, ty.text).formatted)
-    .join(" | ")
+    .join(' | ')
     .replace(/\<\/code\> \| \<code\>/g, ` | `);
 
   o.push(`${type}`);
@@ -440,8 +413,8 @@ function enumTable(data: DocsData, i: DocsEnum) {
         `**\`${m.name}\`**`,
         formatType(data, m.value).formatted,
         formatDescription(data, m.docs),
-        getTagText(m.tags, "since"),
-        getTagText(m.tags, "platform"),
+        getTagText(m.tags, 'since'),
+        getTagText(m.tags, 'platform'),
       ]);
     });
 
@@ -455,18 +428,16 @@ function enumTable(data: DocsData, i: DocsEnum) {
 
 function getTagText(tags: DocsTagInfo[], tagName: string) {
   if (tags) {
-    const tag = tags.find(
-      (t) => t.name === tagName && typeof t.text === "string",
-    );
+    const tag = tags.find((t) => t.name === tagName && typeof t.text === 'string');
     if (tag) {
       return tag.text!;
     }
   }
-  return "";
+  return '';
 }
 
 export async function outputJson(jsonFilePath: string, data: DocsData) {
-  if (typeof jsonFilePath !== "string") {
+  if (typeof jsonFilePath !== 'string') {
     throw new Error(`Missing json file path`);
   }
   if (!path.isAbsolute(jsonFilePath)) {
